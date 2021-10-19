@@ -46,7 +46,7 @@ class MainPage : Fragment() {
         initRecyclerView(recyclerView)
 
         viewModel.getMyLiveData().observe(requireActivity(), {
-            adapter?.setPOD(PODDataObj.getPODFromInternet())
+            adapter?.setPOD(PODDataObj.podsArray)
         })
         viewModel.getPODs()
     }

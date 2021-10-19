@@ -39,19 +39,14 @@ data class PODDataObj(
 ) : Parcelable {
 
     companion object {
-        var podsArray = ArrayList<PODDataObj>()
-
-
-        var  logging: HttpLoggingInterceptor = HttpLoggingInterceptor()
-        var client: OkHttpClient = OkHttpClient.Builder()
-        .addInterceptor(logging)
-        .build();
+       var podsArray = ArrayList<PODDataObj>()
 
         fun getPODFromInternet(): List<PODDataObj> {
             lateinit var urlConnection: HttpURLConnection
+
             try {
                 val someDaysAgo = -40
-                val dataFormat = SimpleDateFormat("yyyy-mm-dd", Locale.getDefault())
+                val dataFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
                 val tempPODArray = ArrayList<PODDataObj>()
                 for (daysAgo in 0 downTo someDaysAgo step -1) {
                     val rangeDate = Calendar.getInstance()
@@ -59,7 +54,7 @@ data class PODDataObj(
                     val date = dataFormat.format(Date(rangeDate.timeInMillis))
 
                     val uri =
-                        URL("https://api.nasa.gov/planetary/apod?api_key=3pMSJak1bU23UWTCMFnORvo4aU1WFbuv72FLNR4b")
+                        URL("https://api.nasa.gov/planetary/apod?api_key=3pMSJak1bU23UWTCMFnORvo4aU1WFbuv72FLNR4b&date=$date")
 
                     urlConnection = uri.openConnection() as HttpsURLConnection
                     urlConnection.requestMethod = "GET"
@@ -89,8 +84,8 @@ data class PODDataObj(
                     tempPODArray.add(onePOD)
                 }
                 podsArray = tempPODArray
-
-                return podsArray
+                Log.d("Error", tempPODArray.toString())
+                return tempPODArray
             } catch (e: Exception) {
                 e.printStackTrace()
                 return listOf()
