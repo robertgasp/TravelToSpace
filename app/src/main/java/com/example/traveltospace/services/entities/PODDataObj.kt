@@ -39,18 +39,19 @@ data class PODDataObj(
 ) : Parcelable {
 
     companion object {
-       var podsArray = ArrayList<PODDataObj>()
+        var podsArray = ArrayList<PODDataObj>()
 
         fun getPODFromInternet(): List<PODDataObj> {
             lateinit var urlConnection: HttpURLConnection
 
+
+            val dataFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+
             try {
-                val someDaysAgo = -40
-                val dataFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
                 val tempPODArray = ArrayList<PODDataObj>()
-                for (daysAgo in 0 downTo someDaysAgo step -1) {
+                for (daysAgo in 0 downTo -40 step -1) {
                     val rangeDate = Calendar.getInstance()
-                    rangeDate.add(Calendar.DATE, someDaysAgo)
+                    rangeDate.add(Calendar.DATE, daysAgo)
                     val date = dataFormat.format(Date(rangeDate.timeInMillis))
 
                     val uri =
@@ -84,14 +85,13 @@ data class PODDataObj(
                     tempPODArray.add(onePOD)
                 }
                 podsArray = tempPODArray
-                Log.d("Error", tempPODArray.toString())
                 return tempPODArray
             } catch (e: Exception) {
                 e.printStackTrace()
                 return listOf()
             }
-        }
 
+        }
 
         private fun getLinesForOld(reader: BufferedReader): String {
             val rawData = StringBuilder(2048)
