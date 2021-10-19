@@ -2,6 +2,7 @@ package com.example.traveltospace.services.entities
 
 import android.os.Build
 import android.os.Parcelable
+import android.util.Log
 import com.example.traveltospace.MainActivity
 import com.google.gson.annotations.SerializedName
 import java.util.*
@@ -9,6 +10,8 @@ import kotlinx.parcelize.Parcelize
 import org.json.JSONObject
 import java.io.BufferedReader
 import androidx.annotation.RequiresApi
+import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import java.io.InputStream
 import java.io.InputStreamReader
 import java.lang.Exception
@@ -37,27 +40,26 @@ data class PODDataObj(
 
     companion object {
         var podsArray = ArrayList<PODDataObj>()
-        var podHD: Boolean? = null
-        var mainActivity = MainActivity()
-        var startRangeDate: String? = null
-        var endRangeDate: String? = null
-        var someDaysAgo = -40
 
+
+        var  logging: HttpLoggingInterceptor = HttpLoggingInterceptor()
+        var client: OkHttpClient = OkHttpClient.Builder()
+        .addInterceptor(logging)
+        .build();
 
         fun getPODFromInternet(): List<PODDataObj> {
-            val dataFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
-
             lateinit var urlConnection: HttpURLConnection
-
             try {
+                val someDaysAgo = -40
+                val dataFormat = SimpleDateFormat("yyyy-mm-dd", Locale.getDefault())
                 val tempPODArray = ArrayList<PODDataObj>()
-                for (daysAgo in 0 downTo someDaysAgo) {
+                for (daysAgo in 0 downTo someDaysAgo step -1) {
                     val rangeDate = Calendar.getInstance()
                     rangeDate.add(Calendar.DATE, someDaysAgo)
                     val date = dataFormat.format(Date(rangeDate.timeInMillis))
 
                     val uri =
-                        URL("https://api.nasa.gov/planetary/apod?api_key=3pMSJak1bU23UWTCMFnORvo4aU1WFbuv72FLNR4b&$date")
+                        URL("https://api.nasa.gov/planetary/apod?api_key=3pMSJak1bU23UWTCMFnORvo4aU1WFbuv72FLNR4b")
 
                     urlConnection = uri.openConnection() as HttpsURLConnection
                     urlConnection.requestMethod = "GET"
@@ -87,6 +89,7 @@ data class PODDataObj(
                     tempPODArray.add(onePOD)
                 }
                 podsArray = tempPODArray
+
                 return podsArray
             } catch (e: Exception) {
                 e.printStackTrace()
@@ -95,58 +98,6 @@ data class PODDataObj(
         }
 
 
-        /*   fun getPODFromInternet(): List<PODDataObj> {
-               val dataFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
-
-               val rangeDate = Calendar.getInstance()
-               rangeDate.add(Calendar.DATE, someDaysAgo)
-               startRangeDate = dataFormat.format(Date(rangeDate.timeInMillis))
-
-               endRangeDate = dataFormat.format(Date())
-
-               val uri =
-                   URL("https://api.nasa.gov/planetary/apod?api_key=3pMSJak1bU23UWTCMFnORvo4aU1WFbuv72FLNR4b&$startRangeDate&$endRangeDate")
-
-               lateinit var urlConnection: HttpURLConnection
-
-               try {
-                   urlConnection = uri.openConnection() as HttpsURLConnection
-                   urlConnection.requestMethod = "GET"
-                   urlConnection.readTimeout = 10000
-                   val bufferedReader = BufferedReader(InputStreamReader(urlConnection.inputStream))
-
-                   val lines = if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
-                       getLinesForOld(bufferedReader)
-                   } else {
-                       getLines(bufferedReader)
-                   }
-
-                   val jsonObject = JSONObject(lines)
-                   val jsonArray = jsonObject.getJSONArray("")
-                   val tempPODArray = ArrayList<PODDataObj>()
-
-                   for (i in 0..jsonArray.length() - 1) {
-                       val onePOD = PODDataObj("0", "0", "0", "0", "0", "0", "0")
-                       onePOD.title = jsonArray.getJSONObject(i).getString("title")
-                       onePOD.description = jsonArray.getJSONObject(i).getString("explanation")
-                       onePOD.date = jsonArray.getJSONObject(i).getString("date")
-                       onePOD.mediaType = jsonArray.getJSONObject(i).getString("media_type")
-                       if (onePOD.mediaType == "image") {
-                           onePOD.pod = jsonArray.getJSONObject(i).getString("url")
-                           onePOD.podHD = jsonArray.getJSONObject(i).getString("hdurl")
-                       }
-                       onePOD.copyright = jsonArray.getJSONObject(i).getString("copyright")
-                       tempPODArray.add(onePOD)
-                   }
-
-                   podsArray = tempPODArray
-                   return podsArray
-               } catch (e: Exception) {
-                   e.printStackTrace()
-                   return listOf()
-               }
-           }*/
-
         private fun getLinesForOld(reader: BufferedReader): String {
             val rawData = StringBuilder(2048)
             var tempVariable: String?
@@ -154,11 +105,13 @@ data class PODDataObj(
                 rawData.append(tempVariable).append("\n")
             }
             reader.close()
+            print(rawData.toString())
             return rawData.toString()
         }
 
         @RequiresApi(Build.VERSION_CODES.N)
         private fun getLines(reader: BufferedReader): String {
+            print(reader.lines().toString())
             return reader.lines().collect(Collectors.joining("\n"))
         }
     }

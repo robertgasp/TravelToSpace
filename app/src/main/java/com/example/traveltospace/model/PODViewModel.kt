@@ -9,16 +9,13 @@ class PODViewModel(private val repositoryInterface: PODRepositoryInterface) : Vi
     LifecycleObserver {
 
     private val myLiveData: MutableLiveData<PODState> = MutableLiveData()
-    //private val myLiveData: MutableLiveData<List<PODDataObj>> = MutableLiveData()
 
-    fun getMyLiveData(): LiveData<PODState> {
-        return myLiveData
-    }
+    fun getMyLiveData()= myLiveData
+
 
     fun getPODs() {
         Thread {
             myLiveData.postValue(PODState.Success(repositoryInterface.getPODFromInternet()))
-            //myLiveData.postValue(repositoryInterface.getPODFromInternet())
         }.start()
     }
 }
