@@ -51,7 +51,7 @@ class PODViewModel(private val repositoryInterface: PODRepositoryInterface) : Vi
 
 
         val tempArray = ArrayList<PODDataObj>()
-        for (daysAgo in 3 downTo 0) {
+        for (daysAgo in 0 downTo -3) {
             val rangeDate = Calendar.getInstance()
             rangeDate.add(Calendar.DATE, daysAgo)
             val date = dataFormat.format(Date(rangeDate.timeInMillis))
