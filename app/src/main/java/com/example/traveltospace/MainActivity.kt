@@ -2,9 +2,7 @@ package com.example.traveltospace
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.fragment.app.FragmentManager
-import com.example.traveltospace.ui.MainPage
-import kotlinx.coroutines.MainScope
+import com.example.traveltospace.ui.MainPageFragment
 
 class MainActivity : AppCompatActivity() {
 
@@ -13,7 +11,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         if (savedInstanceState == null) {
             supportFragmentManager.beginTransaction()
-                .replace(R.id.container, MainPage.newInstance())
+                .replace(R.id.container, MainPageFragment.newInstance())
                 .commit()
         }
     }

@@ -1,23 +1,22 @@
 package com.example.traveltospace.ui
 
-import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.traveltospace.PODState
-import com.example.traveltospace.R
 import com.example.traveltospace.databinding.FragmentMainPageBinding
 import com.example.traveltospace.model.PODViewModel
-import com.example.traveltospace.services.entities.PODDataObj
+import com.example.traveltospace.POD.PODDataObj
+import com.example.traveltospace.ui.adapters.PictureOfTheDayAdapter
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import java.text.SimpleDateFormat
+import java.util.*
 
 
-class MainPage : Fragment() {
+class MainPageFragment : Fragment() {
 
     private var _binding: FragmentMainPageBinding? = null
     private val binding get() = _binding!!
@@ -43,11 +42,16 @@ class MainPage : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+
         initRecyclerView(recyclerView)
 
-        viewModel.getMyLiveData().observe(requireActivity(), {
-            adapter?.setPOD(PODDataObj.podsArray)
+
+        viewModel.getMyLiveData().observe(viewLifecycleOwner, {
+            adapter?.setPOD(viewModel.getPODs())
         })
+
+
         viewModel.getPODs()
     }
 
@@ -60,7 +64,7 @@ class MainPage : Fragment() {
 
 
     companion object {
-        fun newInstance() = MainPage()
+        fun newInstance() = MainPageFragment()
     }
 
 }

@@ -1,8 +1,13 @@
 package com.example.traveltospace.repository
 
-import com.example.traveltospace.services.PODRepositoryInterface
-import com.example.traveltospace.services.entities.PODDataObj
+import com.example.traveltospace.POD.PODDataObj
+
+import com.example.traveltospace.POD.PODRetrofitImpl
+import com.example.traveltospace.model.PODViewModel
 
 class PODsRepository : PODRepositoryInterface {
-    override fun getPODFromInternet(): List<PODDataObj> = PODDataObj.getPODFromInternet()
+    private var podViewModel:PODViewModel?=null
+
+    override fun getPODFromInternet(date: String): List<PODDataObj> = podViewModel!!.getPODs()
+
 }

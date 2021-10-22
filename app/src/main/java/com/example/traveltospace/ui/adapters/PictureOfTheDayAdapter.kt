@@ -1,4 +1,4 @@
-package com.example.traveltospace.ui
+package com.example.traveltospace.ui.adapters
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
@@ -7,8 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.example.traveltospace.databinding.PictureOfTheDayBinding
-import com.example.traveltospace.services.entities.PODDataObj
-import com.google.gson.annotations.SerializedName
+import com.example.traveltospace.POD.PODDataObj
 
 class PictureOfTheDayAdapter(
     private var fragment: Fragment
@@ -16,7 +15,7 @@ class PictureOfTheDayAdapter(
 
     private var podsData: List<PODDataObj> = listOf()
 
-    @SuppressLint("NotifyDataSetChange")
+    @SuppressLint("NotifyDataSetChanged")
     fun setPOD(pods: List<PODDataObj>) {
         podsData = pods
         notifyDataSetChanged()
