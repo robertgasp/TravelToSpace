@@ -26,16 +26,19 @@
         app:chipSpacingHorizontal="25dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/settings_title_themes">
+        app:layout_constraintTop_toBottomOf="@+id/settings_title_themes"
+        app:singleSelection="true">
 
         <com.google.android.material.chip.Chip
             android:id="@+id/settings_chip_space_theme"
+            style="@style/Widget.MaterialComponents.Chip.Choice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/theme_dark_space" />
 
         <com.google.android.material.chip.Chip
             android:id="@+id/settings_chip_mars_theme"
+            style="@style/Widget.MaterialComponents.Chip.Choice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/theme_desert_of_mars" />
@@ -53,6 +56,8 @@
         app:layout_constraintTop_toBottomOf="@+id/settings_chip_group" />
 
     <com.google.android.material.chip.Chip
+        android:id="@+id/settings_chip_hd"
+        style="@style/Widget.MaterialComponents.Chip.Choice"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/all_photos_in_hd"

@@ -12,9 +12,11 @@ class MainActivity : AppCompatActivity(), BottomMenuClickInterface {
 
     private lateinit var binding: ActivityMainBinding
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
+        setTheme(App.instance.myCurrentTheme)
         setContentView(binding.root)
 
         if (savedInstanceState == null) {
@@ -32,7 +34,6 @@ class MainActivity : AppCompatActivity(), BottomMenuClickInterface {
     }
 
     private fun bottomNavigationTabs() {
-
         val bottomNavigationItemView = binding.bottomNavigationMenu
         bottomNavigationItemView.setOnItemSelectedListener {
             var selectedfragment: Fragment? = null
@@ -59,5 +60,12 @@ class MainActivity : AppCompatActivity(), BottomMenuClickInterface {
             }
             false
         }
+
+
+    }
+
+    fun changeTheme(theme: Int) {
+        App.instance.myCurrentTheme = theme
+        this.recreate()
     }
 }

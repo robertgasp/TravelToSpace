@@ -25,6 +25,10 @@ class PODFragment : Fragment() {
         ViewModelProviders.of(this).get(PODViewModel::class.java)
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
