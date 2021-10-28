@@ -1,0 +1,12 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <string name="app_name">Travel To Space</string>
+    <string name="photo_of_the_day_stub">Photo of the day</string>
+    <string name="search_wiki">Найти в Википедии</string>
+    <string name="favourite" tools:ignore="ExtraTranslation">favourite</string>
+    <string name="settings" tools:ignore="ExtraTranslation">settings</string>
+    <string name="search" tools:ignore="ExtraTranslation">Search</string>
+    <string name="try_to_find_in_Wiki">Поищите термин в Википедии</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>

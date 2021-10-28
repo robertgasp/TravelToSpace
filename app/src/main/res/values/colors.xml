@@ -7,4 +7,17 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <color name="feature_1_space_theme_text_color">#FFFFFFFF</color>
+    <color name="feature_1_space_theme_backGround_color">#837E7E</color>
+    <color name="feature_1_space_theme_chips_activated_color">#6F7278</color>
+    <color name="feature_1_space_theme_chips_inactivated_color">#313233</color>
+    <color name="feature_1_space_theme_accent_tab">#FF3700B3</color>
+    <color name="feature_1_space_theme_colorAccent40Alfa">#967BD3</color>
+
+
+    <color name="feature_1_mars_theme_text_color">#FFFFFFFF</color>
+    <color name="feature_1_mars_theme_backGround_color">#EA6A37</color>
+    <color name="feature_1_mars_theme_chips_activated_color">#6F7278</color>
+    <color name="feature_1_mars_theme_chips_inactivated_color">#313233</color>
 </resources>
