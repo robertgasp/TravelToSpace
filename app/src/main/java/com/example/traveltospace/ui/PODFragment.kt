@@ -14,6 +14,7 @@ import com.example.traveltospace.POD.PODViewModel
 import com.example.traveltospace.POD.retrofit.PODData
 import com.example.traveltospace.R
 import com.example.traveltospace.databinding.MainFragmentBinding
+import com.squareup.picasso.Picasso
 
 class PODFragment : Fragment() {
 
@@ -68,6 +69,13 @@ class PODFragment : Fragment() {
                         error(R.drawable.ic_load_error_vector)
                         placeholder(R.drawable.ic_no_photo_vector)
                     }
+
+                    Picasso
+                        .get()
+                        .load(url)
+                        .fit()
+                        .into(imageView)
+
                     title.text = serverResponseData.title
                     description.text = serverResponseData.explanation
                 }

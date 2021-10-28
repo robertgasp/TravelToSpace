@@ -6,6 +6,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.example.traveltospace.ui.PODFragment
 import com.example.traveltospace.databinding.ActivityMainBinding
+import com.example.traveltospace.ui.ObjectsPhoto
 import com.example.traveltospace.ui.SettingsFragment
 
 class MainActivity : AppCompatActivity(), BottomMenuClickInterface {
@@ -44,12 +45,8 @@ class MainActivity : AppCompatActivity(), BottomMenuClickInterface {
                     return@setOnItemSelectedListener true
                 }
                 R.id.objects_photo -> {
-                    Toast.makeText(
-                        this,
-                        "переключение на вкладку Фото объектов",
-                        Toast.LENGTH_SHORT
-                    )
-                        .show()
+                    selectedfragment = ObjectsPhoto()
+                    selectBottomNavigationTab(selectedfragment)
                     return@setOnItemSelectedListener true
                 }
                 R.id.settings -> {
