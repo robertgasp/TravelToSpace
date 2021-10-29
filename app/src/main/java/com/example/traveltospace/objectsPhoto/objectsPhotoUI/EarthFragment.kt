@@ -5,25 +5,15 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
-import android.widget.Toast
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.traveltospace.R
 import com.example.traveltospace.databinding.FragmentEarthBinding
 import com.example.traveltospace.objectsPhoto.EarthViewModel
 import com.example.traveltospace.objectsPhoto.earthRetrofit.EarthData
 import com.example.traveltospace.objectsPhoto.earthRetrofit.EarthServerResponseData
-import com.example.traveltospace.objectsPhoto.recyclerViewAdapters.RecyclerViewAdapterEarth
-import com.google.gson.*
-import com.google.gson.reflect.TypeToken
-import org.json.JSONArray
-import org.json.JSONObject
-import org.json.JSONTokener
-import java.lang.reflect.Type
+import com.example.traveltospace.objectsPhoto.recyclerViewAdapters.EarthRecyclerViewAdapter
 
 
 class EarthFragment : Fragment() {
@@ -35,8 +25,9 @@ class EarthFragment : Fragment() {
     private var _binding: FragmentEarthBinding? = null
     private val binding get() = _binding!!
 
-    private var arrayListOfEarthObjects: ArrayList<EarthServerResponseData>? = null
-    private var earthAdapter: RecyclerViewAdapterEarth? = null
+
+    private var arrayListOfEarthObjects: MutableList<EarthServerResponseData> = mutableListOf()
+    private var earthAdapter: EarthRecyclerViewAdapter? = null
 
 
     override fun onCreateView(
@@ -52,7 +43,6 @@ class EarthFragment : Fragment() {
         initEarthRecyclerView(binding.earthRecycler)
         earthViewModel.getEarthData()
             .observe(viewLifecycleOwner, Observer<EarthData> { renderData(it) })
-        earthAdapter?.setEarth(arrayListOfEarthObjects!!)
     }
 
 
@@ -60,24 +50,23 @@ class EarthFragment : Fragment() {
         when (data) {
             is EarthData.Success -> {
                 val serverResponseData = data.earthServerResponseData
-
                 for (i in 0..serverResponseData.size - 1) {
                     val earthObject = EarthServerResponseData(
                         serverResponseData[i].caption,
                         serverResponseData[i].image,
                         serverResponseData[i].date
                     )
-                    arrayListOfEarthObjects?.add(earthObject)
+                    arrayListOfEarthObjects.add(earthObject)
                 }
+                earthAdapter?.setData(arrayListOfEarthObjects as ArrayList<EarthServerResponseData>)
             }
         }
-
     }
 
     private fun initEarthRecyclerView(recyclerView: RecyclerView?) {
         val lm = LinearLayoutManager(context)
         recyclerView?.layoutManager = lm
-        earthAdapter = RecyclerViewAdapterEarth(this)
+        earthAdapter = EarthRecyclerViewAdapter(this)
         recyclerView?.adapter = earthAdapter
     }
 

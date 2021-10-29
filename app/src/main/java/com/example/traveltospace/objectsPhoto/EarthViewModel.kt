@@ -33,7 +33,7 @@ class EarthViewModel(
                     response: Response<List<EarthServerResponseData>>
                 ) {
                     if (response.isSuccessful && response.body() != null) {
-                        EarthData.Success(response.body()!!)
+                        liveDataForEarthToObserve.value = EarthData.Success(response.body()!!)
                     } else {
                         val message = response.message()
                         if (message.isNullOrEmpty()) {
