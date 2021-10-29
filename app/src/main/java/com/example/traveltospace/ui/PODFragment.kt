@@ -64,11 +64,6 @@ class PODFragment : Fragment() {
                 if (url.isNullOrEmpty()) {
                     toast("Link is empty")
                 } else {
-                    imageView.load(url) {
-                        lifecycle(requireActivity())
-                        error(R.drawable.ic_load_error_vector)
-                        placeholder(R.drawable.ic_no_photo_vector)
-                    }
 
                     Picasso
                         .get()
