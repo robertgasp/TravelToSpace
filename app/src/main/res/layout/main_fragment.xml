@@ -5,6 +5,26 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+<androidx.constraintlayout.motion.widget.MotionLayout
+    android:id="@+id/motion_wiki_field"
+    android:layout_width="match_parent"
+    android:layout_height="100dp"
+    app:layoutDescription="@xml/main_fragment_scene"
+    app:layout_constraintTop_toTopOf="parent"
+    tools:showPaths="true"
+    tools:ignore="MissingConstraints">
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/wiki_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="10dp"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="@+id/input_layout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/input_layout"
+        app:srcCompat="@drawable/ic_wikipedia" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/input_layout"
@@ -27,9 +47,9 @@
             android:id="@+id/input_edit_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="text" />
+            android:inputType="text"/>
     </com.google.android.material.textfield.TextInputLayout>
-
+</androidx.constraintlayout.motion.widget.MotionLayout>
 
     <androidx.core.widget.NestedScrollView
         android:id="@+id/pod_fragment_nested_scroll"
@@ -38,7 +58,7 @@
         android:scrollIndicators="right"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/input_layout"
+        app:layout_constraintTop_toBottomOf="@+id/motion_wiki_field"
         tools:ignore="MissingConstraints">
 
         <LinearLayout

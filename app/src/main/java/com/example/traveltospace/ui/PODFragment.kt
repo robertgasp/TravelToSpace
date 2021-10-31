@@ -1,11 +1,13 @@
 package com.example.traveltospace.ui
 
 
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.*
 import android.widget.Toast
+import androidx.constraintlayout.motion.widget.MotionLayout
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -15,6 +17,9 @@ import com.example.traveltospace.POD.retrofit.PODData
 import com.example.traveltospace.R
 import com.example.traveltospace.databinding.MainFragmentBinding
 import com.squareup.picasso.Picasso
+import androidx.core.view.ViewCompat
+import androidx.core.view.isVisible
+
 
 class PODFragment : Fragment() {
 
@@ -37,6 +42,7 @@ class PODFragment : Fragment() {
             .observe(requireActivity(), Observer<PODData> { renderData(it) })
     }
 
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -47,12 +53,16 @@ class PODFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) = with(binding) {
         super.onViewCreated(view, savedInstanceState)
-
         inputLayout.setEndIconOnClickListener {
             startActivity(Intent(Intent.ACTION_VIEW).apply {
                 data = Uri.parse("https://en.wikipedia.org/wiki/${inputEditText.text.toString()}")
             })
         }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        binding.motionWikiField.transitionToEnd()
     }
 
 
@@ -90,6 +100,7 @@ class PODFragment : Fragment() {
             show()
         }
     }
+
 
     companion object {
         fun newInstance() = PODFragment()

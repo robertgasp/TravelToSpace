@@ -25,10 +25,6 @@ class SettingsFragment : Fragment() {
     private val IS_HD = "IS_HD"
 
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -46,8 +42,11 @@ class SettingsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+
+
         currentTheme = initThemeSet()
         isHD = initHDSet()
+
 
 
         if (currentTheme == "space_theme") {
@@ -86,6 +85,11 @@ class SettingsFragment : Fragment() {
                 saveHDSetToDisk(isHD)
             }
         }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        binding.settingsMotionXml.transitionToEnd()
     }
 
 
