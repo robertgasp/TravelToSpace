@@ -2,29 +2,10 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_page_fragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-<androidx.constraintlayout.motion.widget.MotionLayout
-    android:id="@+id/motion_wiki_field"
-    android:layout_width="match_parent"
-    android:layout_height="100dp"
-    app:layoutDescription="@xml/main_fragment_scene"
-    app:layout_constraintTop_toTopOf="parent"
-    tools:showPaths="true"
-    tools:ignore="MissingConstraints">
-
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/wiki_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="10dp"
-        android:visibility="visible"
-        app:layout_constraintBottom_toBottomOf="@+id/input_layout"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/input_layout"
-        app:srcCompat="@drawable/ic_wikipedia" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/input_layout"
@@ -35,7 +16,6 @@
         app:counterEnabled="true"
         app:counterMaxLength="20"
         app:endIconCheckable="true"
-        app:endIconDrawable="@drawable/ic_wikipedia"
         app:endIconMode="custom"
         app:helperText="@string/try_to_find_in_Wiki"
         app:layout_constraintBottom_toTopOf="@+id/pod_fragment_nested_scroll"
@@ -47,9 +27,21 @@
             android:id="@+id/input_edit_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="text"/>
+            android:inputType="text" />
     </com.google.android.material.textfield.TextInputLayout>
-</androidx.constraintlayout.motion.widget.MotionLayout>
+
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/wiki_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="15dp"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="@+id/input_layout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/input_layout"
+        app:srcCompat="@drawable/ic_wikipedia" />
 
     <androidx.core.widget.NestedScrollView
         android:id="@+id/pod_fragment_nested_scroll"
@@ -58,7 +50,7 @@
         android:scrollIndicators="right"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/motion_wiki_field"
+        app:layout_constraintTop_toBottomOf="@+id/input_layout"
         tools:ignore="MissingConstraints">
 
         <LinearLayout
@@ -78,13 +70,20 @@
                 android:textColor="#000"
                 android:textStyle="bold" />
 
-            <com.example.traveltospace.utils.EqualateralImageView
-                android:id="@+id/image_view"
+            <FrameLayout
+                android:id="@+id/pod_image_view_container"
                 android:layout_width="match_parent"
-                android:layout_height="300dp"
-                android:layout_gravity="center"
-                android:contentDescription="@string/photo_of_the_day_stub"
-                app:srcCompat="@drawable/ic_no_photo_of_the_day" />
+                android:layout_height="wrap_content"
+                android:layout_gravity="center">
+
+                <com.example.traveltospace.utils.EqualateralImageView
+                    android:id="@+id/image_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:contentDescription="@string/photo_of_the_day_stub"
+                    app:srcCompat="@drawable/ic_no_photo_of_the_day" />
+            </FrameLayout>
 
             <TextView
                 android:id="@+id/description"

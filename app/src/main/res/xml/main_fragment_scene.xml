@@ -22,5 +22,5 @@
     <Transition
         app:constraintSetEnd="@id/end"
         app:constraintSetStart="@+id/start"
-        motion:duration="300"/>
+        motion:duration="800"/>
 </MotionScene>

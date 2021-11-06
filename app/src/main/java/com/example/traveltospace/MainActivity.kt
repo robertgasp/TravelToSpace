@@ -2,8 +2,14 @@ package com.example.traveltospace
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.transition.Slide
+import android.transition.TransitionManager
+import android.view.Gravity
+import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentTransaction
+import com.bumptech.glide.Glide
 import com.example.traveltospace.ui.PODFragment
 import com.example.traveltospace.databinding.ActivityMainBinding
 import com.example.traveltospace.ui.ObjectsPhoto
@@ -29,7 +35,9 @@ class MainActivity : AppCompatActivity(), BottomMenuClickInterface {
     }
 
     override fun selectBottomNavigationTab(selectedfragment: Fragment) {
+
         supportFragmentManager.beginTransaction()
+            .setCustomAnimations(R.animator.slide_from_bottom_to_top,R.animator.fade_fragment)
             .replace(R.id.container, selectedfragment)
             .commitAllowingStateLoss()
     }
