@@ -13,4 +13,12 @@
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
     </style>
+
+    <style name="SpaceTheme" parent="Theme.TravelToSpace">
+        <item name="android:background">@color/feature_1_space_theme_backGround_color</item>
+    </style>
+
+    <style name="MarsTheme" parent="Theme.TravelToSpace">
+        <item name="android:background">@color/feature_1_mars_theme_backGround_color</item>
+    </style>
 </resources>
