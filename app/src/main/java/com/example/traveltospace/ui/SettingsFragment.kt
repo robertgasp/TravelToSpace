@@ -89,7 +89,7 @@ class SettingsFragment : Fragment() {
 
     override fun onStart() {
         super.onStart()
-        binding.settingsMotionXml.transitionToEnd()
+        binding.settingsFragment.transitionToEnd()
     }
 
 
