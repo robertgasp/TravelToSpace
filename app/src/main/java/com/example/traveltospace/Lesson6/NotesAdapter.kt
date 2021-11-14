@@ -1,28 +1,36 @@
 package com.example.traveltospace.Lesson6
 
+import android.graphics.Color
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.ViewGroup
-import android.widget.Toast
+import androidx.core.view.MotionEventCompat
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.traveltospace.databinding.CardForNotesBinding
 
-class NotesAdapter(private val fragment: Fragment, private var notes: LiveData<List<Note>?>?) :
-    RecyclerView.Adapter<NotesAdapter.NotesViewHolder>() {
+class NotesAdapter(private val fragment: Fragment, private val dragListener: OnStartDragListener) :
+    RecyclerView.Adapter<NotesAdapter.NotesViewHolder>(), ItemTouchHelperAdapter {
 
-    private var notesArray: List<Note> = listOf()
-    private val fabClickListener: FABClickListener?=null
+    private val notesRepository: NotesRepositoryInterface = NotesRepository()
 
-    fun setData(arrayList: List<Note>) {
-        notesArray = arrayList
+    private var notesArray: ArrayList<Note> = ArrayList<Note>()
+
+    fun addNote(position: Int) {
+        notesRepository.addNote(position)
+        notesArray.add(position, notesRepository.getNote(position))
+        notifyItemInserted(position - 1)
     }
 
-    fun fabClick(){
-            fabClickListener?.fabClickListener()
-        Toast.makeText(Lesson6Fragment().context, "FAB", Toast.LENGTH_SHORT).show()
+    fun removeNote(position: Int) {
+        notesRepository.removeNote(position)
+        notesArray.removeAt(position)
+        notifyItemRemoved(position)
+    }
+
+    fun setData(arrayList: ArrayList<Note>) {
+        notesArray.addAll(arrayList)
     }
 
     override fun onCreateViewHolder(
@@ -38,19 +46,63 @@ class NotesAdapter(private val fragment: Fragment, private var notes: LiveData<L
         holder.bind(notesArray[position])
     }
 
+
     override fun getItemCount(): Int {
         return notesArray.size
     }
 
-
     inner class NotesViewHolder(private val binding: CardForNotesBinding) :
-        RecyclerView.ViewHolder(binding.root) {
+        RecyclerView.ViewHolder(binding.root), ItemTouchHelperViewHolder {
 
         fun bind(note: Note) = with(binding) {
             cardNoteTitle.text = note.noteTitle
             cardNoteDescription.text = note.noteDescription
+
+            addNewNote.setOnClickListener {
+                addNote(notesArray.indexOf(note) + 1)
+            }
+
+            removeNote.setOnClickListener {
+                removeNote(notesArray.indexOf(note))
+            }
+
+            dragMove.setOnTouchListener { _, motionEvent ->
+                if (MotionEventCompat.getActionIndex(motionEvent) == MotionEvent.ACTION_DOWN) {
+                    dragListener.onStartDrag(this@NotesViewHolder)
+                }
+                false
+            }
+        }
+
+        override fun onNoteSelected() {
+            binding.cardNote.setBackgroundColor(Color.RED)
+        }
+
+        override fun onNoteClear() {
+            binding.cardNote.setBackgroundColor(0)
         }
     }
+
+    override fun onNoteMove(fromPosition: Int, toPosition: Int) {
+        val singleNote = notesRepository.getNote(fromPosition)
+        notesRepository.removeNote(fromPosition)
+        notesRepository.addNote(
+            if (toPosition > fromPosition) toPosition - 1 else toPosition, singleNote
+        )
+
+        notesArray.removeAt(fromPosition).apply {
+            notesArray.add(
+                if (toPosition > fromPosition) toPosition - 1 else toPosition, this
+            )
+        }
+        notifyItemMoved(fromPosition, toPosition)
+
+    }
+
+    override fun onNoteDismiss(position: Int) {
+        removeNote(position)
+    }
+
 
     inner class NoteListDiffUtilCallBack(
         private val oldList: List<Note>,
@@ -70,4 +122,6 @@ class NotesAdapter(private val fragment: Fragment, private var notes: LiveData<L
             return oldList[oldItemPosition] == newList[newItemPosition]
         }
     }
+
+
 }

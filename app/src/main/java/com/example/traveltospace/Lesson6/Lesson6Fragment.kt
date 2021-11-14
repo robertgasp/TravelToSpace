@@ -6,45 +6,26 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.traveltospace.databinding.FragmentLesson6Binding
-import java.util.*
+import kotlin.collections.ArrayList
 
 class Lesson6Fragment : Fragment() {
 
     private var _binding: FragmentLesson6Binding? = null
     private val binding get() = _binding!!
 
-    private val notesViewModel: NoteListViewModel? = null
-
-    private var notes = notesViewModel?.getNotesLiveData()
-    private var fabClickListener: FABClickListener? = null
-    private var contextListFragment: Context? = null
+    private val notesRepository: NotesRepositoryInterface = NotesRepository()
 
     private var notesAdapter: NotesAdapter? = null
     private lateinit var itemTouchHelper: ItemTouchHelper
 
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        if (context is FABClickListener) {
-            contextListFragment = context
-            fabClickListener = context
-        }
-    }
 
-    override fun onDetach() {
-        contextListFragment = null
-        super.onDetach()
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
     }
 
     override fun onCreateView(
@@ -57,23 +38,30 @@ class Lesson6Fragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        initRecyclerView(binding.recyclerViewContainerForNotes, notes)
-        notesViewModel?.getNotesLiveData()?.observe(viewLifecycleOwner, { notes ->
-            notes?.let {
-                notesAdapter?.setData(it)
-            }
-        })
+
+        initRecyclerView(binding.recyclerViewContainerForNotes)
+
 
         binding.fabNewNote.setOnClickListener {
-            notesViewModel?.addClicked()
-            Toast.makeText(context, "FABButtonIsClicked", Toast.LENGTH_SHORT).show()
+            if (notesRepository.getNotes().isEmpty()) {
+                notesAdapter?.addNote(notesRepository.getNotes().size)
+            } else
+                notesAdapter?.addNote(notesRepository.getNotes().size - 1)
         }
+
+        ItemTouchHelper(NoteTouchHelperCallback(notesAdapter!!)).attachToRecyclerView(binding.recyclerViewContainerForNotes)
+
+        notesAdapter?.setData(notesRepository.getNotes() as ArrayList<Note>)
     }
 
-    fun initRecyclerView(notesRecyclerView: RecyclerView, notes: LiveData<List<Note>?>?) {
-        val lm = LinearLayoutManager(context)
+    fun initRecyclerView(notesRecyclerView: RecyclerView) {
+        val lm = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         notesRecyclerView.layoutManager = lm
-        notesAdapter = NotesAdapter(this, notes)
+        notesAdapter = NotesAdapter(this, object : OnStartDragListener {
+            override fun onStartDrag(viewHolder: RecyclerView.ViewHolder) {
+                itemTouchHelper.startDrag(viewHolder)
+            }
+        })
         notesRecyclerView.adapter = notesAdapter
     }
 }
