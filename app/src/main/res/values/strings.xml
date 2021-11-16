@@ -3,6 +3,29 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="search_wiki">Поиск в Википедии</string>
-    <string name="search_helper_text">Поищите термин в Википедии</string>
     <string name="photo_of_the_day_stub">Place for Photo of the day</string>
+    <string name="try_to_find_in_Wiki">Поищите термин в Википедии</string>
+    <string name="bottom_menu_main_page">Главная страница</string>
+    <string name="bottom_menu_objects_hoto">Фото объектов</string>
+    <string name="bottom_menu_settings">Настройки</string>
+    <!-- Preference Titles -->
+    <string name="messages_header">Messages</string>
+    <string name="sync_header">Sync</string>
+
+    <!-- Messages Preferences -->
+    <string name="signature_title">Your signature</string>
+    <string name="reply_title">Default reply action</string>
+
+    <!-- Sync Preferences -->
+    <string name="sync_title">Sync email periodically</string>
+    <string name="attachment_title">Download incoming attachments</string>
+    <string name="attachment_summary_on">Automatically download attachments for incoming emails
+    </string>
+    <string name="attachment_summary_off">Only download attachments when manually requested</string>
+    <string name="select_theme">Выбор темы</string>
+    <string name="theme_dark_space">Темный космос</string>
+    <string name="theme_desert_of_mars">Марсианская пустыня</string>
+    <string name="load_photos_in_hd_resolution">Загрузка всех изображений в HD-разрешении</string>
+    <string name="all_photos_in_hd">Все фото в HD</string>
+    <string name="select_mars_rover">Select Mars Rover</string>
 </resources>
