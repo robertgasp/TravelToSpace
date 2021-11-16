@@ -46,6 +46,17 @@ class NotesAdapter(private val fragment: Fragment, private val dragListener: OnS
         holder.bind(notesArray[position])
     }
 
+/*    override fun onBindViewHolder(
+        holder: NotesViewHolder,
+        position: Int,
+        payloads: MutableList<Any>
+    ) {
+        if (payloads.isEmpty()) {
+            super.onBindViewHolder(holder, position, payloads)
+        }else{
+            val combinedChange = createCombinedPayload(payloads as List<Note>)
+        }
+    }*/
 
     override fun getItemCount(): Int {
         return notesArray.size

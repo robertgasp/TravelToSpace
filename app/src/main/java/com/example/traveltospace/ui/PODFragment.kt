@@ -4,8 +4,15 @@ package com.example.traveltospace.ui
 import android.animation.ObjectAnimator
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.Typeface.BOLD
+import android.graphics.Typeface.ITALIC
 import android.net.Uri
 import android.os.Bundle
+import android.text.Spannable
+import android.text.SpannableString
+import android.text.style.ForegroundColorSpan
+import android.text.style.StyleSpan
 import android.transition.*
 import android.view.*
 import android.widget.ImageView
@@ -93,7 +100,25 @@ class PODFragment : Fragment() {
                         .into(imageView)
 
                     title.text = serverResponseData.title
-                    description.text = serverResponseData.explanation
+
+
+                    serverResponseData.explanation?.let {
+                        val blankSpace = serverResponseData.explanation.indexOf(' ')
+                        val spannableExplanation = SpannableString(it)
+                        spannableExplanation.setSpan(
+                            ForegroundColorSpan(Color.RED),
+                            0,
+                            blankSpace,
+                            Spannable.SPAN_INCLUSIVE_INCLUSIVE
+                        )
+                        spannableExplanation.setSpan(
+                            StyleSpan(ITALIC),
+                            0,
+                            spannableExplanation.length,
+                            Spannable.SPAN_INCLUSIVE_INCLUSIVE
+                        )
+                        description.text = spannableExplanation
+                    }
                 }
             }
             is PODData.Loading -> {
@@ -104,13 +129,14 @@ class PODFragment : Fragment() {
         }
     }
 
-    private fun slideWikiInputLayout(viewGroup:ViewGroup){
-        TransitionManager.beginDelayedTransition(viewGroup,Slide(Gravity.END))
-        viewGroup.visibility =View.VISIBLE
+    private fun slideWikiInputLayout(viewGroup: ViewGroup) {
+        viewGroup.visibility = View.INVISIBLE
+        TransitionManager.beginDelayedTransition(viewGroup, Slide(Gravity.END))
+        viewGroup.visibility = View.VISIBLE
     }
 
 /*    private fun slideWikiInputLayout(viewGroup:ViewGroup){
-
+        viewGroup.visibility = View.INVISIBLE
         val changeBounds = ChangeBounds()
         changeBounds.duration = 1000
 

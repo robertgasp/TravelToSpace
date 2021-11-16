@@ -1,5 +1,6 @@
 package com.example.traveltospace.objectsPhoto.recyclerViewAdapters
 
+import android.graphics.Typeface
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,6 +13,7 @@ import com.example.traveltospace.MainActivity
 import com.example.traveltospace.R
 import com.example.traveltospace.databinding.CardForRecyclerviewEarthBinding
 import com.example.traveltospace.objectsPhoto.earthRetrofit.EarthServerResponseData
+import com.example.traveltospace.ui.PODFragment
 import com.squareup.picasso.Picasso
 
 class EarthRecyclerViewAdapter(
@@ -60,7 +62,10 @@ class EarthRecyclerViewAdapter(
             }
 
             captionEarth.text = singleEarthPhoto.caption
+
+            dateEarth.typeface = Typeface.createFromAsset(fragmnet.activity?.assets, "courbi.ttf")
             dateEarth.text = singleEarthPhoto.date
+
         }
     }
 }
