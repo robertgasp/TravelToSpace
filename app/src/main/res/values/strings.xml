@@ -28,4 +28,5 @@
     <string name="load_photos_in_hd_resolution">Загрузка всех изображений в HD-разрешении</string>
     <string name="all_photos_in_hd">Все фото в HD</string>
     <string name="select_mars_rover">Select Mars Rover</string>
+    <string name="splash_screen_title_text">Travel to Space</string>
 </resources>

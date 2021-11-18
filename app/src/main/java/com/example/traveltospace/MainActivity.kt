@@ -37,7 +37,7 @@ class MainActivity : AppCompatActivity(), BottomMenuClickInterface {
     override fun selectBottomNavigationTab(selectedfragment: Fragment) {
 
         supportFragmentManager.beginTransaction()
-            .setCustomAnimations(R.animator.slide_from_bottom_to_top,R.animator.fade_fragment)
+            .setCustomAnimations(R.animator.slide_from_bottom_to_top, R.animator.fade_fragment)
             .replace(R.id.container, selectedfragment)
             .commitAllowingStateLoss()
     }
