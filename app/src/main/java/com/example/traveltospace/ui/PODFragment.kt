@@ -9,6 +9,7 @@ import android.graphics.Typeface.BOLD
 import android.graphics.Typeface.ITALIC
 import android.net.Uri
 import android.os.Bundle
+import android.os.Handler
 import android.text.Spannable
 import android.text.SpannableString
 import android.text.style.ForegroundColorSpan
@@ -131,20 +132,11 @@ class PODFragment : Fragment() {
 
     private fun slideWikiInputLayout(viewGroup: ViewGroup) {
         viewGroup.visibility = View.INVISIBLE
-        TransitionManager.beginDelayedTransition(viewGroup, Slide(Gravity.END))
-        viewGroup.visibility = View.VISIBLE
+        Handler().postDelayed({
+            TransitionManager.beginDelayedTransition(viewGroup, Slide(Gravity.START))
+            viewGroup.visibility = View.VISIBLE
+        }, 100)
     }
-
-/*    private fun slideWikiInputLayout(viewGroup:ViewGroup){
-        viewGroup.visibility = View.INVISIBLE
-        val changeBounds = ChangeBounds()
-        changeBounds.duration = 1000
-
-        TransitionManager.beginDelayedTransition(viewGroup,TransitionSet()
-            .addTransition(changeBounds)
-            .addTransition(Slide(Gravity.START)))
-        viewGroup.visibility =View.VISIBLE
-    }*/
 
     private fun fadeOutSomeObject(view: View) {
         ObjectAnimator
